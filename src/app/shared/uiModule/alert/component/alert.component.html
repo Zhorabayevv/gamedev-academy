@@ -1,0 +1,14 @@
+<div class="alerts">
+  <div *ngFor="let alert of alerts" class="{{ cssClass(alert) }}">
+    <div class="alert-left-content"></div>
+    <div class="alert__icon v_center">
+      <img src="/assets/images/warning.icon.svg" alt="icon" />
+    </div>
+    <div class="alert__message v_center">
+      <span>{{ alert.message }}</span>
+    </div>
+    <div class="alert__close" (click)="removeAlert(alert)">
+      <img src="/assets/images/x-close.icon.svg" alt="close" />
+    </div>
+  </div>
+</div>

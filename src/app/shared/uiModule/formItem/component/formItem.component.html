@@ -1,0 +1,10 @@
+<div class="form-item">
+  <div class="form-item__label">
+    <span>{{ labelProps }}</span>
+    <span *ngIf="requiredProps">*</span>
+  </div>
+
+  <div>
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -13,39 +13,45 @@ export class AlertService {
 
   constructor() {}
 
-  public onAlert(id: string = this.defaultId): Observable<Alert> {
+  public onAlert(id: string): Observable<Alert> {
+    console.log('onAlert', this.subject);
+
     return this.subject
       .asObservable()
       .pipe(filter((alert) => alert && alert.id === id));
   }
 
   public success(message: string, options?: IAlertOptions): void {
-    this.alert(new Alert({ ...options, type: AlertType.Success, message }));
+    console.log('success', message);
+
+    this.alert({ ...options, type: AlertType.Success, message });
   }
 
-  public error(message: string, options?: IAlertOptions): void {
-    this.alert(new Alert({ ...options, type: AlertType.Error, message }));
+  public error(message: string, autoCloseValue?: boolean): void {
+    console.log('error', message);
+
+    const autoClose = autoCloseValue === undefined ? true : autoCloseValue;
+
+    this.alert({ autoClose, type: AlertType.Error, message });
   }
 
   public warn(message: string, options?: IAlertOptions): void {
-    this.alert(new Alert({ ...options, type: AlertType.Warning, message }));
+    this.alert({ ...options, type: AlertType.Warning, message });
   }
 
   private alert(alert: Alert): void {
     alert.id = alert.id || this.generateID();
 
+    console.log('alert', alert);
+
     if (this.alerts.length >= this.maxAlerts) {
       this.clear(this.alerts[0].id);
     }
 
-    console.log('alert', alert);
-
     this.alerts.push(alert);
-
     this.subject.next(alert);
 
-    console.log('this.alerts', this.alerts);
-    console.log('this.subject', this.subject);
+    console.log('alerts', this.subject);
   }
 
   public clear(id: string = this.defaultId): void {

@@ -40,3 +40,27 @@ li {
   margin: 0;
   padding: 0;
 }
+
+button {
+  width: fit-content;
+  padding: 16px 31px;
+  margin-right: 32px;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  line-height: 22px;
+  font-family: Inter;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+input {
+  height: 50px;
+  border: 1px solid #e0e2e7;
+  border-radius: 5px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #6f727a;
+  outline: none;
+}

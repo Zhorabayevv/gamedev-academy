@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+
 import { AlertService } from 'src/app/shared/uiModule/alert/services/alert.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -10,7 +13,12 @@ import { AlertService } from 'src/app/shared/uiModule/alert/services/alert.servi
 export class LoginPageComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private _fb: FormBuilder, private _alertService: AlertService) {}
+  constructor(
+    private _fb: FormBuilder,
+    private _authService: AuthService,
+    private _alertService: AlertService,
+    private cookieService: CookieService
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -18,13 +26,30 @@ export class LoginPageComponent implements OnInit {
 
   initializeForm(): void {
     this.loginForm = this._fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      login: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       //
     });
   }
 
   onSubmit(): void {
+    const url = '/login';
+
+    // this._authService.login(url, this.loginForm.value).subscribe(
+    //   (response) => {
+    //     console.log('response', response);
+    //     const { token, refreshToken } = response.data?.tokens;
+    //     this.cookieService.set('token', token);
+    //     this.cookieService.set('refreshToken', refreshToken);
+    //   },
+    //   (error) => {
+    //     const errorMessages = error['error']['errors'].join('\n');
+
+    //     this._alertService.error(errorMessages, true);
+    //   }
+    // );
+
     this._alertService.success('Login successful');
+    this._alertService.error('Login failed');
   }
 }

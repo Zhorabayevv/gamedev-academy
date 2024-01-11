@@ -1,0 +1,35 @@
+.input {
+  position: relative;
+
+  input {
+    width: 100%;
+    padding: 18px 40px 18px 24px;
+  }
+
+  &.error {
+    input {
+      border-color: #fc5a5a;
+      color: #fc5a5a;
+    }
+  }
+  &.success {
+    input {
+      border-color: #249f5d;
+      color: #249f5d;
+    }
+  }
+
+  &.error,
+  &.success {
+    img {
+      position: absolute;
+      display: block;
+      right: 15px;
+      top: 14px;
+    }
+  }
+
+  img {
+    display: none;
+  }
+}

@@ -12,38 +12,36 @@
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <app-form-item [label]="'Логин'" [required]="true">
-          <input
-            type="text"
-            formControlName="email"
-            placeholder="Email"
-            class="form-control"
-          />
+          <app-input
+            [placeholder]="'mail@simmmple.com'"
+            [value]="loginForm.get('login')"
+          ></app-input>
         </app-form-item>
-        <div>
-          <input
-            type="password"
-            formControlName="password"
-            placeholder="Password"
-            class="form-control"
-          />
-        </div>
 
-        <div>
+        <app-form-item [label]="'Пароль'" [required]="true">
+          <app-input
+            [placeholder]="'Минимум 8 символов'"
+            [value]="loginForm.get('password')"
+            [password]="true"
+          ></app-input>
+        </app-form-item>
+
+        <div class="form-actions">
           <div class="form-check">
             <input type="checkbox" class="form-check-input" />
-            <label class="form-check-label" for="rememberMe">
-              {{ "Запомнить меня" }}
+            <label for="rememberMe">
+              {{ "Запомнить" }}
             </label>
           </div>
-          <div>
-            <a routerLink="#">
+          <div class="forget">
+            <a>
               {{ "Забыли пароль?" }}
             </a>
           </div>
         </div>
-        <div>
+        <div class="form-submit">
           <!-- [disabled]="loginForm.invalid" -->
-          <button type="submit">Login</button>
+          <button type="submit" [disabled]="loginForm.invalid">Войти</button>
         </div>
       </form>
     </div>

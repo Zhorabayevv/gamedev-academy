@@ -33,6 +33,38 @@ main {
           color: #6f727a;
         }
       }
+
+      .form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 7px 0 32px 0;
+
+        .form-check {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 20px;
+          color: #101d2d;
+
+          input {
+            margin-right: 11px;
+            height: auto;
+          }
+        }
+
+        .forget {
+          color: #4c54f4;
+        }
+      }
+
+      .form-submit {
+        display: flex;
+        justify-content: center;
+
+        button {
+          background-color: #4c54f4;
+        }
+      }
     }
   }
 }

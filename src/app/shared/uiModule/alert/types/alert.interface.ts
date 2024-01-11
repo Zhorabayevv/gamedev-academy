@@ -1,5 +1,5 @@
 export class Alert {
-  id: string;
+  id?: string;
   type: AlertType;
   message: string;
   autoClose: boolean;
@@ -11,9 +11,9 @@ export class Alert {
 
 export interface IAlertOptions {
   id?: string;
-  type?: AlertType;
-  message?: string;
-  autoClose?: boolean;
+  type: AlertType;
+  message: string;
+  autoClose: boolean;
 }
 
 export enum AlertType {

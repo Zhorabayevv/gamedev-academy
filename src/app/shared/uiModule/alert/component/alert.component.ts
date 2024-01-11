@@ -1,17 +1,16 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Alert, AlertType } from '../types/alert.interface';
 import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { AlertService } from '../services/alert.service';
+import { Alert, AlertType } from '../types/alert.interface';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
 })
-export class AlertComponent implements OnInit, OnDestroy {
+export class AlertComponent implements OnInit {
   @Input('id') idProps: string = 'default-alert';
 
-  private unsubscribe$ = new Subject<void>();
   alerts: Alert[] = [];
   alertSubscription: Subscription;
 
@@ -21,15 +20,13 @@ export class AlertComponent implements OnInit, OnDestroy {
     this.initializeListeners();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
+  // ngOnDestroy(): void {
+  //   this.alertSubscription.unsubscribe();
+  // }
 
   initializeListeners(): void {
     this.alertSubscription = this._alertService
       .onAlert(this.idProps)
-      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((alert) => {
         console.log('alert', alert);
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
@@ -6,13 +6,27 @@ import { AbstractControl } from '@angular/forms';
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
 })
-export class InputComponent {
-  @Input('label') labelProps: string;
+export class InputComponent implements OnInit {
+  @Input('placeholder') placeholderProps: string;
   @Input('value') valueProps: AbstractControl;
+  @Input('password') passwordProps: boolean = false;
+
+  errorInput: boolean = false;
+  successInput: boolean = false;
+  inputType: string = 'text';
 
   constructor() {}
 
-  onFocus(): void {}
+  ngOnInit(): void {
+    this.inputType = this.passwordProps ? 'password' : 'text';
+  }
 
-  onBlur(): void {}
+  onBlur(): void {
+    this.errorInput = this.valueProps.invalid && this.valueProps.touched;
+    this.successInput = this.valueProps.valid && this.valueProps.touched;
+  }
+
+  togglePassword(): void {
+    this.inputType = this.inputType === 'password' ? 'text' : 'password';
+  }
 }

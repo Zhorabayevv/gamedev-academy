@@ -1,10 +1,11 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginPageComponent } from './components/loginPage.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { UIModule } from '../shared/uiModule/uiModule.module';
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   {
@@ -17,11 +18,11 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    UIModule,
     FormsModule,
     ReactiveFormsModule,
-    UIModule,
   ],
   declarations: [LoginPageComponent],
-  providers: [],
+  providers: [AuthService],
 })
 export class AuthModule {}

@@ -1,0 +1,59 @@
+.admin-page {
+  padding: 67px 51px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .user-photo {
+      margin-right: 10px;
+
+      img {
+        width: 65px;
+        height: 65px;
+      }
+    }
+    .user-info {
+    }
+  }
+
+  &__content {
+    p {
+      margin-bottom: 16px;
+      font-size: 18px;
+      line-height: 22px;
+      color: #101d2d;
+      font-weight: 500;
+    }
+
+    input {
+      width: 617px;
+      padding: 15px;
+      color: #101d2d;
+    }
+
+    &-actions {
+      display: flex;
+      align-items: center;
+      margin-top: 26px;
+
+      .error {
+        background-color: #fc5a5a;
+      }
+
+      .success {
+        background-color: #249f5d;
+      }
+
+      .warning {
+        color: #101d2d;
+        background-color: #f5a623;
+      }
+
+      .info {
+        background-color: #4c54f4;
+      }
+    }
+  }
+}

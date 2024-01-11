@@ -1,7 +1,28 @@
-<input
-  #inputElement
-  type="text"
-  [formControl]="valueProps | formControl"
-  (focus)="onFocus()"
-  (blur)="onBlur()"
-/>
+<div class="input" [ngClass]="{ error: errorInput, success: successInput }">
+  <input
+    #inputElement
+    [type]="inputType"
+    [placeholder]="placeholderProps"
+    [formControl]="valueProps | formControl"
+    (blur)="onBlur()"
+  />
+
+  <ng-container *ngIf="passwordProps; else passwordTemplate">
+    <img
+      src="/assets/images/{{
+        inputType === 'password' ? 'eye-closed' : 'eye'
+      }}.icon.svg"
+      alt="password"
+      (click)="togglePassword()"
+    />
+  </ng-container>
+  <ng-template #passwordTemplate>
+    <img
+      *ngIf="!passwordProps"
+      src="/assets/images/{{
+        errorInput ? 'warning' : successInput ? 'success-check' : ''
+      }}.icon.svg"
+      alt="warning"
+    />
+  </ng-template>
+</div>

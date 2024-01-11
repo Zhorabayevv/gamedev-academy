@@ -14,43 +14,19 @@
 
     &.alert-success {
       .alert-left-content {
-        background-color: #fc5a5a;
-      }
-
-      .alert__icon {
-        ::ng-deep {
-          path {
-            fill: #fc5a5a;
-          }
-        }
+        background-color: #249f5d;
       }
     }
 
     &.alert-danger {
       .alert-left-content {
-        background-color: #249f5d;
-      }
-
-      .alert__icon {
-        ::ng-deep {
-          path {
-            fill: #249f5d;
-          }
-        }
+        background-color: #fc5a5a;
       }
     }
 
     &.alert-warning {
       .alert-left-content {
         background-color: #fcca00;
-      }
-
-      .alert__icon {
-        ::ng-deep {
-          path {
-            fill: #fcca00;
-          }
-        }
       }
     }
 

@@ -11,6 +11,7 @@ import { Alert, AlertType } from '../types/alert.interface';
 export class AlertComponent implements OnInit {
   @Input('id') idProps: string = 'default-alert';
 
+  private unsubscribe$: Subject<void> = new Subject<void>();
   alerts: Alert[] = [];
   alertSubscription: Subscription;
 
@@ -20,16 +21,24 @@ export class AlertComponent implements OnInit {
     this.initializeListeners();
   }
 
-  // ngOnDestroy(): void {
-  //   this.alertSubscription.unsubscribe();
-  // }
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
   initializeListeners(): void {
     this.alertSubscription = this._alertService
-      .onAlert(this.idProps)
+      .onAlert()
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((alert) => {
-        console.log('alert', alert);
+        if (alert.message === undefined || alert.type === undefined) {
+          const indexToRemove = this.alerts.findIndex(
+            (alert) => alert.id === alert.id
+          );
 
+          this.alerts.splice(indexToRemove, 1);
+          return;
+        }
         this.alerts.push(alert);
 
         if (alert.autoClose) {

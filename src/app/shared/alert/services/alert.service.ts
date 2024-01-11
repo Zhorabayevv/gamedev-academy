@@ -6,30 +6,27 @@ import { Alert, AlertType, IAlertOptions } from '../types/alert.interface';
 
 @Injectable()
 export class AlertService {
-  private subject: Subject<Alert> = new Subject<Alert>();
+  private subject$: Subject<Alert> = new Subject<Alert>();
   private defaultId: string = 'default-alert';
   private maxAlerts: number = 3;
   private alerts: Alert[] = [];
 
   constructor() {}
 
-  public onAlert(id: string): Observable<Alert> {
-    console.log('onAlert', this.subject);
+  public onAlert(): Observable<Alert> {
+    console.log('onAlert', this.subject$);
 
-    return this.subject
-      .asObservable()
-      .pipe(filter((alert) => alert && alert.id === id));
+    // return this.subject$
+    //   .asObservable()
+    //   .pipe(filter((alert) => alert && alert.id === id));
+    return this.subject$.asObservable();
   }
 
   public success(message: string, options?: IAlertOptions): void {
-    console.log('success', message);
-
     this.alert({ ...options, type: AlertType.Success, message });
   }
 
   public error(message: string, autoCloseValue?: boolean): void {
-    console.log('error', message);
-
     const autoClose = autoCloseValue === undefined ? true : autoCloseValue;
 
     this.alert({ autoClose, type: AlertType.Error, message });
@@ -46,20 +43,20 @@ export class AlertService {
 
     if (this.alerts.length >= this.maxAlerts) {
       this.clear(this.alerts[0].id);
+
+      console.log('this.alerts', this.alerts);
     }
 
     this.alerts.push(alert);
-    this.subject.next(alert);
-
-    console.log('alerts', this.subject);
+    this.subject$.next(alert);
   }
 
-  public clear(id: string = this.defaultId): void {
+  public clear(id: string): void {
     const index = this.alerts.findIndex((alert) => alert.id === id);
     if (index !== -1) {
       const removedAlert = this.alerts.splice(index, 1)[0];
 
-      this.subject.next(new Alert({ id: removedAlert.id }));
+      this.subject$.next(new Alert({ id: removedAlert.id }));
     }
   }
 

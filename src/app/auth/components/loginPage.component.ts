@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 
-import { AlertService } from 'src/app/shared/uiModule/alert/services/alert.service';
+import { AlertService } from 'src/app/shared/alert/services/alert.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -49,7 +49,6 @@ export class LoginPageComponent implements OnInit {
     //   }
     // );
 
-    this._alertService.success('Login successful');
-    this._alertService.error('Login failed');
+    this._alertService.success('Login successful' + this.loginForm.value.login);
   }
 }

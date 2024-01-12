@@ -1,12 +1,17 @@
 <div class="admin-page">
   <div class="admin-page__header">
     <div class="user-photo">
-      <img src="/assets/images/logo.svg" alt="photo" />
+      <img
+        [src]="userInfo?.userAvatar || '/assets/images/logo.svg'"
+        alt="photo"
+      />
     </div>
 
     <div class="user-info">
-      <h3>Имя и Фамилия</h3>
-      <p>ID пользователя: <span>00</span></p>
+      <h3>{{ userInfo?.userName }}</h3>
+      <p>
+        ID пользователя: <span>{{ userInfo?.userId }}</span>
+      </p>
     </div>
   </div>
 
@@ -16,7 +21,11 @@
     <input type="text" [(ngModel)]="inputValue" />
 
     <div class="admin-page__content-actions">
-      <button *ngFor="let button of buttons" [class]="button['class']">
+      <button
+        *ngFor="let button of buttons"
+        [class]="button['class']"
+        (click)="onButtonClick(button['class'])"
+      >
         {{ button["label"] }}
       </button>
     </div>

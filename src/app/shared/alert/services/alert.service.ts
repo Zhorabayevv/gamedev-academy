@@ -1,29 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
-import { Alert, AlertType, IAlertOptions } from '../types/alert.interface';
+import { IAlert, AlertType, IAlertOptions } from '../types/alert.interface';
 
 @Injectable()
 export class AlertService {
-  private subject$: Subject<Alert> = new Subject<Alert>();
-  private defaultId: string = 'default-alert';
+  private subject$: Subject<IAlert> = new Subject<IAlert>();
   private maxAlerts: number = 3;
-  private alerts: Alert[] = [];
+  private alerts: IAlert[] = [];
 
   constructor() {}
 
-  public onAlert(): Observable<Alert> {
-    console.log('onAlert', this.subject$);
-
-    // return this.subject$
-    //   .asObservable()
-    //   .pipe(filter((alert) => alert && alert.id === id));
+  public onAlert(): Observable<IAlert> {
     return this.subject$.asObservable();
   }
 
-  public success(message: string, options?: IAlertOptions): void {
-    this.alert({ ...options, type: AlertType.Success, message });
+  public success(message: string, autoCloseValue?: boolean): void {
+    const autoClose = autoCloseValue === undefined ? true : autoCloseValue;
+
+    this.alert({ autoClose, type: AlertType.Success, message });
   }
 
   public error(message: string, autoCloseValue?: boolean): void {
@@ -32,19 +27,23 @@ export class AlertService {
     this.alert({ autoClose, type: AlertType.Error, message });
   }
 
-  public warn(message: string, options?: IAlertOptions): void {
-    this.alert({ ...options, type: AlertType.Warning, message });
+  public warn(message: string, autoCloseValue?: boolean): void {
+    const autoClose = autoCloseValue === undefined ? true : autoCloseValue;
+
+    this.alert({ autoClose, type: AlertType.Warning, message });
   }
 
-  private alert(alert: Alert): void {
+  private alert(alert: IAlert): void {
     alert.id = alert.id || this.generateID();
 
-    console.log('alert', alert);
+    if (alert.autoClose) {
+      setTimeout(() => this.clear(alert.id), 15000);
+    }
 
     if (this.alerts.length >= this.maxAlerts) {
-      this.clear(this.alerts[0].id);
+      const oldestAlertId = this.alerts[0].id;
 
-      console.log('this.alerts', this.alerts);
+      this.clear(oldestAlertId);
     }
 
     this.alerts.push(alert);
@@ -53,10 +52,11 @@ export class AlertService {
 
   public clear(id: string): void {
     const index = this.alerts.findIndex((alert) => alert.id === id);
+
     if (index !== -1) {
       const removedAlert = this.alerts.splice(index, 1)[0];
 
-      this.subject$.next(new Alert({ id: removedAlert.id }));
+      this.subject$.next({ ...removedAlert, message: undefined });
     }
   }
 

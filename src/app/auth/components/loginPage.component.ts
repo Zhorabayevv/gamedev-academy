@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
 import { AlertService } from 'src/app/shared/alert/services/alert.service';
 import { AuthService } from '../services/auth.service';
+import { ILoginResponse } from '../types/loginResponse.interface';
 
 @Component({
   selector: 'app-login-page',
@@ -17,6 +19,7 @@ export class LoginPageComponent implements OnInit {
     private _fb: FormBuilder,
     private _authService: AuthService,
     private _alertService: AlertService,
+    private _router: Router,
     private cookieService: CookieService
   ) {}
 
@@ -35,20 +38,22 @@ export class LoginPageComponent implements OnInit {
   onSubmit(): void {
     const url = '/login';
 
-    // this._authService.login(url, this.loginForm.value).subscribe(
-    //   (response) => {
-    //     console.log('response', response);
-    //     const { token, refreshToken } = response.data?.tokens;
-    //     this.cookieService.set('token', token);
-    //     this.cookieService.set('refreshToken', refreshToken);
-    //   },
-    //   (error) => {
-    //     const errorMessages = error['error']['errors'].join('\n');
+    this._authService.login(url, this.loginForm.value).subscribe({
+      next: (response: ILoginResponse) => {
+        const { userInfo } = response;
+        const { token, refreshToken } = response.tokens;
 
-    //     this._alertService.error(errorMessages, true);
-    //   }
-    // );
+        this.cookieService.set('token', token);
+        this.cookieService.set('refreshToken', refreshToken);
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        this._router.navigate(['/admin']);
+        this._alertService.success('Успешная авторизация', true);
+      },
+      error: (error: any) => {
+        const errorMessages = error['error']?.['errors']?.join('\n');
 
-    this._alertService.success('Login successful' + this.loginForm.value.login);
+        this._alertService.error(errorMessages, true);
+      },
+    });
   }
 }

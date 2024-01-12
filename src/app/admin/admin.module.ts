@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AdminPanelComponent } from './component/adminPanel.component';
+import { AuthService } from '../auth/services/auth.service';
 
 const routes: Routes = [
   {
@@ -20,6 +21,6 @@ const routes: Routes = [
     ReactiveFormsModule,
   ],
   declarations: [AdminPanelComponent],
-  providers: [],
+  providers: [AuthService],
 })
 export class AdminModule {}

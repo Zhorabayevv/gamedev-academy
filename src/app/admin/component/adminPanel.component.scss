@@ -12,9 +12,27 @@
       img {
         width: 65px;
         height: 65px;
+
+        border-radius: 8px; // просто
       }
     }
     .user-info {
+      font-family: Inter;
+      font-size: 14px;
+      line-height: 14px;
+      color: #101d2d;
+
+      h3 {
+        font-weight: 700;
+      }
+
+      p {
+        font-weight: 500;
+
+        span {
+          font-weight: 700;
+        }
+      }
     }
   }
 

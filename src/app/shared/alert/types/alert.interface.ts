@@ -1,12 +1,8 @@
-export class Alert {
+export class IAlert {
   id?: string;
   type: AlertType;
   message: string;
   autoClose: boolean;
-
-  constructor(init?: Partial<Alert>) {
-    Object.assign(this, init);
-  }
 }
 
 export interface IAlertOptions {

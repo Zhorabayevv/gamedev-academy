@@ -1,18 +1,35 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription, take, takeUntil } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+
 import { AlertService } from '../services/alert.service';
-import { Alert, AlertType } from '../types/alert.interface';
+import { IAlert, AlertType } from '../types/alert.interface';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
+  // animations: [
+  //   trigger('fadeInOut', [
+  //     transition(':enter', [
+  //       style({ opacity: 0, transform: 'translateY(-20px)' }),
+  //       animate(
+  //         '300ms ease-in-out',
+  //         style({ opacity: 1, transform: 'translateY(0)' })
+  //       ),
+  //     ]),
+  //     transition(':leave', [
+  //       animate(
+  //         '300ms ease-in-out',
+  //         style({ opacity: 0, transform: 'translateY(-20px)' })
+  //       ),
+  //     ]),
+  //   ]),
+  // ],
 })
-export class AlertComponent implements OnInit {
-  @Input('id') idProps: string = 'default-alert';
-
+export class AlertComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
-  alerts: Alert[] = [];
+  alerts: IAlert[] = [];
   alertSubscription: Subscription;
 
   constructor(private _alertService: AlertService) {}
@@ -47,13 +64,13 @@ export class AlertComponent implements OnInit {
       });
   }
 
-  removeAlert(alert: Alert) {
+  removeAlert(alert: IAlert) {
     if (!this.alerts.includes(alert)) return;
 
     this.alerts = this.alerts.filter((x) => x !== alert);
   }
 
-  cssClass(alert: Alert): string {
+  cssClass(alert: IAlert): string {
     if (!alert) return '';
 
     const classes = ['alert'];

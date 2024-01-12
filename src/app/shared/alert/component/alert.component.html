@@ -2,7 +2,17 @@
   <div *ngFor="let alert of alerts" class="{{ cssClass(alert) }}">
     <div class="alert-left-content"></div>
     <div class="alert__icon v_center">
-      <img src="/assets/images/warning.icon.svg" alt="icon" />
+      <div [ngSwitch]="alert.type">
+        <div *ngSwitchCase="0">
+          <img src="/assets/images/success-union.icon.svg" alt="success" />
+        </div>
+        <div *ngSwitchCase="1">
+          <img src="/assets/images/warning.icon.svg" alt="error" />
+        </div>
+        <div *ngSwitchCase="2">
+          <img src="/assets/images/warning-union.icon.svg" alt="warning" />
+        </div>
+      </div>
     </div>
     <div class="alert__message v_center">
       <span>{{ alert.message }}</span>

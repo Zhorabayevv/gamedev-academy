@@ -9,23 +9,23 @@ import { IAlert, AlertType } from '../types/alert.interface';
   selector: 'app-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
-  // animations: [
-  //   trigger('fadeInOut', [
-  //     transition(':enter', [
-  //       style({ opacity: 0, transform: 'translateY(-20px)' }),
-  //       animate(
-  //         '300ms ease-in-out',
-  //         style({ opacity: 1, transform: 'translateY(0)' })
-  //       ),
-  //     ]),
-  //     transition(':leave', [
-  //       animate(
-  //         '300ms ease-in-out',
-  //         style({ opacity: 0, transform: 'translateY(-20px)' })
-  //       ),
-  //     ]),
-  //   ]),
-  // ],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate(
+          '300ms ease-in-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in-out',
+          style({ opacity: 0, transform: 'translateY(-20px)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class AlertComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();

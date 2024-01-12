@@ -1,5 +1,9 @@
 <div class="alerts">
-  <div *ngFor="let alert of alerts" class="{{ cssClass(alert) }}">
+  <div
+    *ngFor="let alert of alerts; let i = index"
+    class="{{ cssClass(alert) }}"
+    [@fadeInOut]="i"
+  >
     <div class="alert-left-content"></div>
     <div class="alert__icon v_center">
       <div [ngSwitch]="alert.type">
